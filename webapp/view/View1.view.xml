@@ -3,7 +3,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <Page id="page" showHeader="false">
+    <Page id="page" showHeader="false" class="pageShell">
         <customHeader>
             <OverflowToolbar design="Solid" height="3rem">
                 <ToolbarSpacer width="1rem" />
@@ -55,7 +55,7 @@
                             class="filterButton" />
                     </HBox>
 
-                    <HBox>
+                    <HBox alignItems="Start">
                         <!-- Available courses -->
                         <VBox class="coursesPanel">
                             <Title text="Available Courses" level="H4" />
@@ -90,8 +90,7 @@
                                 </columns>
                                 <items>
                                     <ColumnListItem
-                                        vAlign="Top"
-                                        selected="{registration>selected}">
+                                        vAlign="Top">
                                         <cells>
                                             <ObjectIdentifier
                                                 title="{registration>code}"
@@ -110,7 +109,7 @@
                                                 type="Emphasized"
                                                 press=".onToggleCourse"
                                                 tooltip="Add / remove course"
-                                                data-courseId="{registration>id}" />
+                                                class="courseActionButton" />
                                         </cells>
                                     </ColumnListItem>
                                 </items>

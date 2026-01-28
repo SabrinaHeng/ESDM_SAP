@@ -67,7 +67,7 @@ sap.ui.define([
             ];
 
             return {
-                minCredits: 15,
+                minCredits: 9,
                 maxCredits: 21,
                 totalCredits: 0,
                 selectedCount: 0,
@@ -82,18 +82,16 @@ sap.ui.define([
 
         onToggleCourse(oEvent) {
             const oButton = oEvent.getSource();
-            const sCourseId = oButton.data("courseId");
-            const oModel = this.getView().getModel("registration");
-            const aCourses = oModel.getProperty("/courses") || [];
-
-            const oCourse = aCourses.find((c) => c.id === sCourseId);
-            if (!oCourse) {
+            const oCtx = oButton.getBindingContext("registration");
+            if (!oCtx) {
                 return;
             }
 
-            oCourse.selected = !oCourse.selected;
-            oModel.setProperty("/courses", aCourses);
+            const sPath = oCtx.getPath(); // e.g. "/courses/0"
+            const oModel = oCtx.getModel();
+            const bSelected = oCtx.getProperty("selected");
 
+            oModel.setProperty(sPath + "/selected", !bSelected);
             this._recalculateCredits();
         },
 
