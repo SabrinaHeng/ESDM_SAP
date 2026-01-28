@@ -1,1 +1,74 @@
-/* Enter your custom styles here */
+/* Layout shell */
+.appShell {
+    height: 100%;
+}
+
+.sideNav {
+    background-color: #f7f9fc;
+    padding: 1rem 0.5rem;
+}
+
+.sideNavHeader {
+    padding: 0 0.5rem 1rem 0.5rem;
+}
+
+.sideNavUserBox {
+    margin-left: 0.5rem;
+}
+
+.sideNavUserName {
+    font-weight: bold;
+}
+
+.sideNavUserRole {
+    font-size: 0.75rem;
+    color: #6b6b6b;
+}
+
+.sideNavList .sapMLIB {
+    border-radius: 0.5rem;
+    margin: 0.1rem 0.25rem;
+}
+
+.mainContent {
+    padding: 1rem 2rem;
+    background-color: #edf2f7;
+    width: 100%;
+}
+
+.courseToolbar {
+    margin-bottom: 1rem;
+}
+
+.coursesPanel {
+    background-color: #ffffff;
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+    flex: 3;
+}
+
+.summaryPanel {
+    margin-left: 1rem;
+    flex: 1.2;
+}
+
+.summaryBox {
+    background-color: #ffffff;
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+    margin-top: 0.5rem;
+}
+
+.subTitle {
+    font-size: 0.8rem;
+    color: #6b6b6b;
+    margin-bottom: 0.5rem;
+}
+
+.noteText {
+    font-size: 0.7rem;
+    color: #6b6b6b;
+    margin-top: 0.5rem;
+}

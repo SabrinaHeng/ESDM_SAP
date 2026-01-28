@@ -1,6 +1,161 @@
-<mvc:View controllerName="project1.controller.View1"
+<mvc:View
+    controllerName="project1.controller.View1"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Page id="page" showHeader="false">
+        <customHeader>
+            <OverflowToolbar design="Solid" height="3rem">
+                <ToolbarSpacer width="1rem" />
+                <Title text="Credit Hour Less" level="H3" />
+                <ToolbarSpacer />
+                <Button icon="sap-icon://search" type="Transparent" tooltip="Search" />
+                <Button icon="sap-icon://bell" type="Transparent" tooltip="Notifications" />
+                <Avatar src="https://ui5.sap.com/test-resources/sap/m/demokit/tutorial/walkthrough/img/John_Miller.png" displayShape="Circle" />
+                <ToolbarSpacer width="1rem" />
+            </OverflowToolbar>
+        </customHeader>
+
+        <content>
+            <HBox class="appShell">
+                <!-- Side navigation -->
+                <VBox class="sideNav" width="15rem">
+                    <HBox class="sideNavHeader" alignItems="Center">
+                        <Avatar src="https://ui5.sap.com/test-resources/sap/m/demokit/tutorial/walkthrough/img/John_Miller.png"
+                            displayShape="Circle" />
+                        <VBox class="sideNavUserBox">
+                            <Text text="Brendan Chia" class="sideNavUserName" />
+                            <Text text="Lab Tester" class="sideNavUserRole" />
+                        </VBox>
+                    </HBox>
+                    <List mode="None" class="sideNavList">
+                        <StandardListItem title="View Profile" icon="sap-icon://person-placeholder" type="Inactive" />
+                        <StandardListItem title="Academic Matters" icon="sap-icon://course-program" type="Inactive" />
+                        <StandardListItem title="Timetable" icon="sap-icon://appointment" type="Inactive" />
+                        <StandardListItem title="Credit Transfer" icon="sap-icon://sorting-ranking" type="Inactive" />
+                        <StandardListItem title="Course Registration" icon="sap-icon://add-coursebook" type="Active" />
+                        <StandardListItem title="ePPPK" icon="sap-icon://document-text" type="Inactive" />
+                        <StandardListItem title="Student Experience" icon="sap-icon://collaborate" type="Inactive" />
+                        <StandardListItem title="Industrial Training" icon="sap-icon://factory" type="Inactive" />
+                    </List>
+                </VBox>
+
+                <!-- Main content -->
+                <VBox class="mainContent">
+                    <!-- Search + filters -->
+                    <HBox class="courseToolbar" alignItems="Center">
+                        <SearchField
+                            width="100%"
+                            placeholder="Search by course name, code, or lecturer..."
+                            search=".onSearchCourses" liveChange=".onLiveChangeSearch" />
+                        <Button
+                            icon="sap-icon://filter"
+                            text="Filters"
+                            type="Transparent"
+                            class="filterButton" />
+                    </HBox>
+
+                    <HBox>
+                        <!-- Available courses -->
+                        <VBox class="coursesPanel">
+                            <Title text="Available Courses" level="H4" />
+                            <Text text="Showing {registration>/availableCount} of {registration>/totalCount} courses" class="subTitle" />
+
+                            <Table
+                                id="coursesTable"
+                                growing="true"
+                                growingScrollToLoad="true"
+                                items="{
+                                    path: 'registration>/courses'
+                                }">
+                                <columns>
+                                    <Column width="6rem">
+                                        <Text text="Code" />
+                                    </Column>
+                                    <Column width="16rem">
+                                        <Text text="Course Name" />
+                                    </Column>
+                                    <Column hAlign="Center" width="5rem">
+                                        <Text text="Credit Hours" />
+                                    </Column>
+                                    <Column hAlign="Center" width="5rem">
+                                        <Text text="Type" />
+                                    </Column>
+                                    <Column hAlign="Center" width="4rem">
+                                        <Text text="Section" />
+                                    </Column>
+                                    <Column hAlign="Center" width="5rem">
+                                        <Text text="Action" />
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem
+                                        vAlign="Top"
+                                        selected="{registration>selected}">
+                                        <cells>
+                                            <ObjectIdentifier
+                                                title="{registration>code}"
+                                                text="{registration>shortCode}" />
+                                            <ObjectIdentifier
+                                                title="{registration>name}"
+                                                text="{registration>lecturer}" />
+                                            <ObjectNumber
+                                                number="{registration>creditHours}" />
+                                            <ObjectStatus
+                                                text="{registration>type}"
+                                                state="{= ${registration>type} === 'Core' ? 'Success' : 'Information' }" />
+                                            <Text text="{registration>section}" />
+                                            <Button
+                                                icon="{= ${registration>selected} ? 'sap-icon://less' : 'sap-icon://add' }"
+                                                type="Emphasized"
+                                                press=".onToggleCourse"
+                                                tooltip="Add / remove course"
+                                                data-courseId="{registration>id}" />
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </VBox>
+
+                        <!-- Pending registration & credit summary -->
+                        <VBox class="summaryPanel">
+                            <Title text="Pending Registration" level="H4" />
+                            <VBox class="summaryBox">
+                                <HBox justifyContent="SpaceBetween">
+                                    <Text text="{registration>/selectedCount} Subjects Selected" />
+                                    <Text text="{registration>/totalCredits} / {registration>/maxCredits} Credits" />
+                                </HBox>
+
+                                <MessageStrip
+                                    text="{registration>/statusMessage}"
+                                    type="{registration>/statusType}"
+                                    showIcon="true"
+                                    visible="{= !!${registration>/statusMessage} }" />
+
+                                <Text
+                                    text="Programme limit: {registration>/minCredits} - {registration>/maxCredits} credits"
+                                    class="subTitle" />
+
+                                <Button
+                                    text="Register for Courses"
+                                    type="Emphasized"
+                                    width="100%"
+                                    press=".onRegister"
+                                    enabled="{registration>/canRegister}" />
+                                <Button
+                                    text="Save Draft"
+                                    type="Default"
+                                    width="100%"
+                                    press=".onSaveDraft" />
+                            </VBox>
+
+                            <Text
+                                text="Registration is subject to course availability and prerequisite requirements."
+                                class="noteText" />
+                        </VBox>
+                    </HBox>
+                </VBox>
+            </HBox>
+        </content>
     </Page>
 </mvc:View>
